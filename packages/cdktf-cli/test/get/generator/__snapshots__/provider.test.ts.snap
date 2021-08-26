@@ -122,7 +122,7 @@ using temporary security credentials.
   * 
   * Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/aws#assume_role AwsProvider#assume_role}
   */
-  readonly assumeRole?: AwsProviderAssumeRole[];
+  readonly assumeRole?: AwsProviderAssumeRole;
   /**
   * endpoints block
   * 
@@ -134,7 +134,7 @@ using temporary security credentials.
   * 
   * Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/aws#ignore_tags AwsProvider#ignore_tags}
   */
-  readonly ignoreTags?: AwsProviderIgnoreTags[];
+  readonly ignoreTags?: AwsProviderIgnoreTags;
 }
 export interface AwsProviderAssumeRole {
   /**
@@ -1477,11 +1477,11 @@ export class AwsProvider extends cdktf.TerraformProvider {
   }
 
   // assume_role - computed: false, optional: true, required: false
-  private _assumeRole?: AwsProviderAssumeRole[];
+  private _assumeRole?: AwsProviderAssumeRole;
   public get assumeRole() {
     return this._assumeRole;
   }
-  public set assumeRole(value: AwsProviderAssumeRole[]  | undefined) {
+  public set assumeRole(value: AwsProviderAssumeRole  | undefined) {
     this._assumeRole = value;
   }
   public resetAssumeRole() {
@@ -1509,11 +1509,11 @@ export class AwsProvider extends cdktf.TerraformProvider {
   }
 
   // ignore_tags - computed: false, optional: true, required: false
-  private _ignoreTags?: AwsProviderIgnoreTags[];
+  private _ignoreTags?: AwsProviderIgnoreTags;
   public get ignoreTags() {
     return this._ignoreTags;
   }
-  public set ignoreTags(value: AwsProviderIgnoreTags[]  | undefined) {
+  public set ignoreTags(value: AwsProviderIgnoreTags  | undefined) {
     this._ignoreTags = value;
   }
   public resetIgnoreTags() {
@@ -1547,9 +1547,9 @@ export class AwsProvider extends cdktf.TerraformProvider {
       skip_requesting_account_id: cdktf.booleanToTerraform(this._skipRequestingAccountId),
       token: cdktf.stringToTerraform(this._token),
       alias: cdktf.stringToTerraform(this._alias),
-      assume_role: cdktf.listMapper(awsProviderAssumeRoleToTerraform)(this._assumeRole),
+      assume_role: awsProviderAssumeRoleToTerraform(this._assumeRole),
       endpoints: cdktf.listMapper(awsProviderEndpointsToTerraform)(this._endpoints),
-      ignore_tags: cdktf.listMapper(awsProviderIgnoreTagsToTerraform)(this._ignoreTags),
+      ignore_tags: awsProviderIgnoreTagsToTerraform(this._ignoreTags),
     };
   }
 }

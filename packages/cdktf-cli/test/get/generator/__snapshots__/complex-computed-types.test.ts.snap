@@ -47,7 +47,7 @@ export interface AcmCertificateConfig extends cdktf.TerraformMetaArguments {
   * 
   * Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/aws/r/acm_certificate.html#options AcmCertificate#options}
   */
-  readonly options?: AcmCertificateOptions[];
+  readonly options?: AcmCertificateOptions;
 }
 export class AcmCertificateDomainValidationOptions extends cdktf.ComplexComputedList {
 
@@ -282,11 +282,11 @@ export class AcmCertificate extends cdktf.TerraformResource {
   }
 
   // options - computed: false, optional: true, required: false
-  private _options?: AcmCertificateOptions[];
+  private _options?: AcmCertificateOptions;
   public get options() {
     return this.interpolationForAttribute('options') as any;
   }
-  public set options(value: AcmCertificateOptions[] ) {
+  public set options(value: AcmCertificateOptions ) {
     this._options = value;
   }
   public resetOptions() {
@@ -311,7 +311,7 @@ export class AcmCertificate extends cdktf.TerraformResource {
       subject_alternative_names: cdktf.listMapper(cdktf.stringToTerraform)(this._subjectAlternativeNames),
       tags: cdktf.hashMapper(cdktf.anyToTerraform)(this._tags),
       validation_method: cdktf.stringToTerraform(this._validationMethod),
-      options: cdktf.listMapper(acmCertificateOptionsToTerraform)(this._options),
+      options: acmCertificateOptionsToTerraform(this._options),
     };
   }
 }

@@ -693,14 +693,14 @@ export interface DeeplyNestedBlockTypesLifecycleRule {
   * 
   * Docs at Terraform Registry: {@link https://www.terraform.io/docs/providers/aws/r/deeply_nested_block_types.html#expiration DeeplyNestedBlockTypes#expiration}
   */
-  readonly expiration?: DeeplyNestedBlockTypesLifecycleRuleExpiration[];
+  readonly expiration?: DeeplyNestedBlockTypesLifecycleRuleExpiration;
 }
 
 function deeplyNestedBlockTypesLifecycleRuleToTerraform(struct?: DeeplyNestedBlockTypesLifecycleRule): any {
   if (!cdktf.canInspect(struct)) { return struct; }
   return {
     abort_incomplete_multipart_upload_days: cdktf.numberToTerraform(struct!.abortIncompleteMultipartUploadDays),
-    expiration: cdktf.listMapper(deeplyNestedBlockTypesLifecycleRuleExpirationToTerraform)(struct!.expiration),
+    expiration: deeplyNestedBlockTypesLifecycleRuleExpirationToTerraform(struct!.expiration),
   }
 }
 

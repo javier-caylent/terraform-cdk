@@ -314,7 +314,7 @@ export class AttributesEmitter {
           )}ToTerraform)(${varReference}),`
         );
         break;
-      case type.isList:
+      case type.isList && !type.isSingleItem:
         this.code.line(
           `${
             att.terraformName
