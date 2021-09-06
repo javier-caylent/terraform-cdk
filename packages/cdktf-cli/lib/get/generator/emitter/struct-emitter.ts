@@ -65,6 +65,10 @@ export class StructEmitter {
       );
     }
     this.code.closeBlock();
+
+    if (!(struct instanceof ConfigStruct)) {
+      this.emitToTerraformFuction(struct);
+    }
   }
 
   private emitToTerraformFuction(struct: Struct) {
